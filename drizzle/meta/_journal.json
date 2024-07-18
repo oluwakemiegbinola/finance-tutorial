@@ -1,0 +1,20 @@
+{
+  "version": "5",
+  "dialect": "pg",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1721301439936,
+      "tag": "0000_bizarre_hawkeye",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1721303577395,
+      "tag": "0001_fluffy_shatterstar",
+      "breakpoints": true
+    }
+  ]
+}
