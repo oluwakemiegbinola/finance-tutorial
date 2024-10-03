@@ -1,17 +1,29 @@
 import { NextResponse } from "next/server";
 import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
 
-const isProtectedRoute = createRouteMatcher([
-  '/',
-]);
+// Define protected routes
+const isProtectedRoute = createRouteMatcher(['/']);
 
-export default clerkMiddleware((auth, request) => {
-  if (isProtectedRoute(request)) {
-    auth().protect()
+// Clerk middleware
+export default clerkMiddleware((req) => {
+  // Ensure auth object exists and is correctly destructured from the request
+  const { auth } = req as any;
+
+  if (auth && isProtectedRoute(req)) {
+    try {
+      // Protect the route if it's a protected route
+      auth.protect();
+    } catch (error) {
+      // Handle any errors from protecting the route
+      console.error('Error protecting the route:', error);
+      return NextResponse.redirect('/login');
+    }
   }
-  return NextResponse.next()
+
+  return NextResponse.next();
 });
 
+// Configuration for Clerk middleware
 export const config = {
   matcher: ['/((?!.*\\..*|_next).*)', '/', '/(api|trpc)(.*)'],
 };
